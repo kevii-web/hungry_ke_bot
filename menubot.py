@@ -1,12 +1,12 @@
+import os
 import time
 import json 
 import requests
 import urllib
 import firebaselink
-import os
 
-bot_token = os.environ['BOT_TOKEN']
-URL = "https://api.telegram.org/bot{}/".format(bot_token)
+TOKEN = os.environ['BOT_TOKEN']
+URL = "https://api.telegram.org/bot{}/".format(TOKEN)
 
 
 def get_url(url):
