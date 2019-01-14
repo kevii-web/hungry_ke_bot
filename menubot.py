@@ -1,70 +1,48 @@
 import os
-import time
-import json 
-import requests
-import urllib
 import firebaselink
+import logging
+from telegram.ext import Updater, CommandHandler
 
 TOKEN = os.environ['BOT_TOKEN']
+PORT = int(os.environ.get('PORT', '8443'))
 URL = "https://api.telegram.org/bot{}/".format(TOKEN)
 
+# Enable logging
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
 
-def get_url(url):
-    response = requests.get(url)
-    content = response.content.decode("utf8")
-    return content
+logger = logging.getLogger(__name__)
 
-def get_json_from_url(url):
-    content = get_url(url)
-    js = json.loads(content)
-    return js
+# Command handler for sending daily menu
+def start(bot, update):
+    """Send the menu when the command /start is issued."""
+    text = firebaselink.getMenu()
+    bot.send_message(chat_id=update.message.chat_id, text=text, parse_mode="markdown")
 
-def get_updates(offset=None):
-    url = URL + "getUpdates?timeout=100"
-    if offset:
-        url += "&offset={}".format(offset)
-    js = get_json_from_url(url)
-    return js
-
-def get_last_update_id(updates):
-    update_ids = []
-    for update in updates["result"]:
-        update_ids.append(int(update["update_id"]))
-    return max(update_ids)
-
-def get_last_chat_id_and_text(updates):
-    num_updates = len(updates["result"])
-    last_update = num_updates - 1
-    text = updates["result"][last_update]["message"]["text"]
-    chat_id = updates["result"][last_update]["message"]["chat"]["id"]
-    return (text, chat_id)
-
-def send_menu(updates):
-    for update in updates["result"]:
-        try:
-            text = firebaselink.getMenu()
-            chat = update["message"]["chat"]["id"]
-            send_message(text, chat)
-        except Exception as e:
-            print(e)
-
-def send_message(text, chat_id):
-    print("sent something")
-    text = urllib.parse.quote_plus(text)
-    url = URL + "sendMessage?text={}&chat_id={}&parse_mode=markdown".format(text, chat_id)
-    get_url(url)
+def error(bot, update, error):
+    """Log Errors caused by Updates."""
+    logger.warning('Update "%s" caused error "%s"', update, error)
     
 def main():
-    last_update_id = None
-    while True:
-        updates = get_updates(last_update_id)
-        if len(updates["result"]) > 0:
-            last_update_id = get_last_update_id(updates) + 1
-            send_menu(updates)
-        time.sleep(0.5)
+    """Start the bot."""
+    # Create the EventHandler and pass it your bot's token.
+    updater = Updater(TOKEN)
+
+    # Get the dispatcher to register handlers
+    dp = updater.dispatcher
+
+    # Add handler for handling start commands
+    dp.add_handler(CommandHandler("start", start))
+
+    # log all errors
+    dp.add_error_handler(error)
+
+    # Webhook handler for listening to incoming requests
+    updater.start_webhook(listen="0.0.0.0",
+            port=PORT,
+            url_path=TOKEN)
+    updater.bot.set_webhook("https://hungry-ke-bot.herokuapp.com/" + TOKEN)
+    updater.idle()
 
 if __name__ == '__main__':
     main()
-
-text, chat = get_last_chat_id_and_text(get_updates())
-send_message(text, chat)

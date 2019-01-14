@@ -1,5 +1,6 @@
 import pyrebase
 import datetime
+import os
 from pytz import timezone
 
 config = {
@@ -18,6 +19,7 @@ now = datetime.datetime.now(timezone('Asia/Singapore'))
 today = now.strftime("%A, %d %B %Y")
 print(today)
 
+# Returns menu items from firebase database
 def getMenu():
     for item in items.each():
         date = item.key()
