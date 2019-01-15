@@ -24,6 +24,7 @@ def error(bot, update, error):
     logger.warning('Update "%s" caused error "%s"', update, error)
 
 def logMessages(bot, update):
+    print(update.message.message_id + " user: " + update.message.from_user + " chat id: " + update.message.chat_id)
     print(update.message.text)
     
 def main():
