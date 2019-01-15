@@ -1,7 +1,7 @@
 import os
 import firebaselink
 import logging
-from telegram.ext import Updater, CommandHandler
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 TOKEN = os.environ['BOT_TOKEN']
 PORT = int(os.environ.get('PORT', '8443'))
@@ -22,6 +22,9 @@ def start(bot, update):
 def error(bot, update, error):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, error)
+
+def logMessages(bot, update):
+    print(update.message.text)
     
 def main():
     """Start the bot."""
@@ -36,6 +39,9 @@ def main():
 
     # log all errors
     dp.add_error_handler(error)
+
+    # log messages
+    dp.add_handler(MessageHandler(Filters.all, logMessages))
 
     # Webhook handler for listening to incoming requests
     updater.start_webhook(listen="0.0.0.0",
