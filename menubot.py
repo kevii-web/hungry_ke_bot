@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 def start(bot, update):
     """Send the menu when the command /start is issued."""
     text = firebaselink.getMenu()
+    print(str(update.message.from_user));
     bot.send_message(chat_id=update.message.chat_id, text=text, parse_mode="markdown")
 
 def error(bot, update, error):
