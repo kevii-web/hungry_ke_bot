@@ -15,7 +15,7 @@ firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 items = db.get()
 # get today's date
-now = datetime.datetime.now(timezone('Etc/GMT+10'))
+now = datetime.datetime.now(timezone('Australia/Queensland'))
 today = now.strftime("%A, %d %B %Y")
 print(today)
 
