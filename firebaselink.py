@@ -20,7 +20,11 @@ today = now.strftime("%A, %d %B %Y")
 print(today)
 
 # Returns menu items from firebase database
-def getMenu():  
+def getMenu():
+    # get today's date
+    now = datetime.datetime.now(timezone('Australia/Queensland'))
+    today = now.strftime("%A, %d %B %Y")
+      
     for item in items.each():
         date = item.key()
         if (date == today):
