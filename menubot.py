@@ -3,7 +3,7 @@ import firebaselink
 import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-TOKEN = "687748871:AAEbwYWKyKlcBzjkmnYuKLayQF3UTX-ke30"
+TOKEN = os.environ['BOT_TOKEN']
 PORT = int(os.environ.get('PORT', '8443'))
 URL = "https://api.telegram.org/bot{}/".format(TOKEN)
 
@@ -45,9 +45,11 @@ def main():
     # log messages
     dp.add_handler(MessageHandler(Filters.all, logMessages))
 
-    # Start the bot
-    updater.start_polling()
-
+    # Webhook handler for listening to incoming requests
+    updater.start_webhook(listen="0.0.0.0",
+            port=PORT,
+            url_path=TOKEN)
+    updater.bot.set_webhook("https://hungry-ke-bot.herokuapp.com/" + TOKEN)
     updater.idle()
 
 if __name__ == '__main__':
