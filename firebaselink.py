@@ -29,9 +29,9 @@ def getMenu():
         date = item.key()
         if (date == today):
             dateObject = item.val()
-            breakfast = "*Breakfast\n*" + dateObject['breakfast1'] + "\n" + dateObject['breakfast2'] + "\n" + dateObject['breakfast3']
-            dinner = "*Dinner\n*"+ "_Meat:_ " + dateObject['meat'] + "\n"+ "_Vege:_ " + dateObject['vege'] + "\n"+ "_Sides:_ " + dateObject['sides'] + "\n"+ "_Soup & Fruit/Dessert:_ " + dateObject['soup'] + ", " + dateObject['fruit'] + "\nDrinks"
+            breakfast = "Breakfast\n" + dateObject['breakfast1'] + "\n" + dateObject['breakfast2'] + "\n" + dateObject['breakfast3']
+            dinner = "Dinner\n"+ "_Meat:_ " + dateObject['meat'] + "\n"+ "_Vege:_ " + dateObject['vege'] + "\n"+ "_Sides:_ " + dateObject['sides'] + "\n"+ "_Soup & Fruit/Dessert:_ " + dateObject['soup'] + ", " + dateObject['fruit'] + "\nDrinks"
             dinner = dinner.replace(',', ', ')
             special = "Special\n" + dateObject['special'].replace(',',' ')
             
-            return "*" + date + "*" + "\n\n" + str(breakfast + "\n\n" + dinner) + str("\n\n_" + special + "_")
+            return "" + date + "" + "\n\n" + str(breakfast + "\n\n" + dinner) + str("\n\n_" + special + "_")
