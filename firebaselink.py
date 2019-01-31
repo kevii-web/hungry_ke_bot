@@ -7,7 +7,7 @@ config = {
   "apiKey": "AIzaSyB2NkfLUIUIK58IAO_4Xor_PUKc3BnFJrg",
   "authDomain": "hungry-ke-bot.firebaseio.com/",
   "databaseURL": "https://hungry-ke-bot.firebaseio.com/",
-  "storageBucket": "hungrykebot.appspot.com"
+  "storageBucket": "hungry-ke-bot.appspot.com"
 }
 
 firebase = pyrebase.initialize_app(config)
