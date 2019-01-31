@@ -4,9 +4,9 @@ import os
 from pytz import timezone
 
 config = {
-  "apiKey": "AIzaSyBLcRWvSCuy3hWtZG9Jw5abo8Re4l80Mm0",
-  "authDomain": "hungrykebot.firebaseapp.com",
-  "databaseURL": "https://hungrykebot.firebaseio.com/",
+  "apiKey": "AIzaSyB2NkfLUIUIK58IAO_4Xor_PUKc3BnFJrg",
+  "authDomain": "hungry-ke-bot.firebaseio.com/",
+  "databaseURL": "https://hungry-ke-bot.firebaseio.com/",
   "storageBucket": "hungrykebot.appspot.com"
 }
 
