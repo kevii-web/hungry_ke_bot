@@ -21,7 +21,7 @@ print(today)
 
 # Returns menu items from firebase database
 def getMenu():
-    # get today's date
+    # get today's date (2 hours ahead)
     now = datetime.datetime.now(timezone('Australia/Queensland'))
     today = now.strftime("%A, %d %B %Y")
       
